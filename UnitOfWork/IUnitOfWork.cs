@@ -8,5 +8,6 @@ public interface IUnitOfWork
     Task Complete(); 
     Task CompleteWithTransaction();
     IGenericRepository<Book> BookRepository { get; }
+    IGenericRepository<Genre> GenreRepository { get; }
 
 }

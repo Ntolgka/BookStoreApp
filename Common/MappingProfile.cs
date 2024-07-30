@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using BookStoreApp.Model;
-using static BookStoreApp.BooksOperations.CreateBookCommand;
-using static BookStoreApp.BooksOperations.GetBookDetailQuery;
-using static BookStoreApp.BooksOperations.GetBooksQuery;
-
+using BookStoreApp.Schema.Book;
+using BookStoreApp.Schema.Genre;
 
 namespace BookStoreApp.Common
 {
@@ -11,9 +9,19 @@ namespace BookStoreApp.Common
     {
         public MappingProfile()
         {
-            CreateMap<CreateBookModel, Book>().ReverseMap();
-            CreateMap<Book, BookDetailViewModel>().ForMember(dest => dest.Genre, opt => opt.MapFrom(src => ((GenreEnum)src.GenreId).ToString())).ForMember(dest => dest.PublishDate, opt => opt.MapFrom(src => src.PublishDate.Date.ToString("dd/MM/yyy"))).ReverseMap();
-            CreateMap<Book, BooksViewModel>().ForMember(dest => dest.Genre, opt => opt.MapFrom(src => ((GenreEnum)src.GenreId).ToString())).ForMember(dest => dest.PublishDate, opt => opt.MapFrom(src => src.PublishDate.Date.ToString("dd/MM/yyy"))).ReverseMap();
+            CreateMap<CreateBookDto, Book>();
+            CreateMap<Book, GetBookDetailDto>()
+                .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.Genre.Name))
+                .ForMember(dest => dest.PublishDate, opt => opt.MapFrom(src => src.PublishDate.ToString("yyyy-MM-dd")));
+            CreateMap<Book, GetBooksDto>()
+                .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.Genre.Name))
+                .ForMember(dest => dest.PublishDate, opt => opt.MapFrom(src => src.PublishDate.ToString("yyyy-MM-dd")));
+            CreateMap<UpdateBookDto, Book>();
+        
+            CreateMap<CreateGenreDto, Genre>();
+            CreateMap<Genre, GetGenreDetailDto>();
+            CreateMap<Genre, GetGenresDto>();
+            CreateMap<UpdateGenreDto, Genre>();
         }
     }
 }

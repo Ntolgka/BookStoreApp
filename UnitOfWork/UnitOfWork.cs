@@ -9,11 +9,13 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     private readonly AppDbContext _dbContext;
 
     public IGenericRepository<Book> BookRepository { get; }
+    public IGenericRepository<Genre> GenreRepository { get; }
 
     public UnitOfWork(AppDbContext dbContext)
     {
         _dbContext = dbContext;
         BookRepository = new GenericRepository<Book>(_dbContext);
+        GenreRepository = new GenericRepository<Genre>(_dbContext);
     }
 
     public void Dispose()

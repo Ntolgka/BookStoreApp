@@ -1,15 +1,10 @@
 ﻿using AutoMapper;
-using BookStoreApp.BooksOperations;
-using BookStoreApp.DBOperations;
-using BookStoreApp.GenericRepository;
-using BookStoreApp.Model;
+using BookStoreApp.Application.BooksOperations;
+using BookStoreApp.Schema.Book;
+using BookStoreApp.UnitOfWork;
 using BookStoreApp.Validation.Book;
 using FluentValidation;
-using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
-using static BookStoreApp.BooksOperations.CreateBookCommand;
-using static BookStoreApp.BooksOperations.GetBookDetailQuery;
-using static BookStoreApp.BooksOperations.UpdateBookCommand;
 
 namespace BookStoreApp.Controllers
 {
@@ -17,82 +12,68 @@ namespace BookStoreApp.Controllers
     [Route("[controller]s")]
     public class BookController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public BookController(AppDbContext context, IMapper mapper)
+        public BookController(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
         [HttpGet]
-        public IActionResult GetBooks()
+        public async Task<IActionResult> GetAll()
         {
-            GetBooksQuery query = new GetBooksQuery(_context, _mapper);
-            var result = query.Handle();
+            var query = new GetBooksQuery(_unitOfWork, _mapper);
+            var result = await query.Handle();
             return Ok(result);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            BookDetailViewModel result;
+            var query = new GetBookDetailQuery(_unitOfWork, _mapper) { BookId = id };
 
-            GetBookDetailQuery query = new GetBookDetailQuery(_context, _mapper);
-            query.BookId = id;
-
-            GetBookDetailQueryValidator validator = new();
+            var validator = new GetBookDetailQueryValidator();
             validator.ValidateAndThrow(query);
 
-            result = query.Handle();
-
+            var result = await query.HandleAsync();
             return Ok(result);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddBook([FromBody] CreateBookModel newBook)
+        public async Task<IActionResult> CreateBook([FromBody] CreateBookDto newBook)
         {
-            var genericRepository = new GenericRepository<Book>(_context);
-            CreateBookCommand command = new CreateBookCommand(genericRepository, _mapper);
+            var command = new CreateBookCommand(_unitOfWork, _mapper) { Model = newBook };
 
-            command.Model = newBook;
-
-            CreateBookCommandValidator validator = new();
-            ValidationResult result = validator.Validate(command);
-
+            var validator = new CreateBookCommandValidator();
             validator.ValidateAndThrow(command);
-            await command.HandleAsync();
 
+            await command.HandleAsync();
             return Ok($"{newBook.Title} has saved successfully.");
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateBook(int id, [FromBody] UpdateBookModel updatedBook)
+        public async Task<IActionResult> UpdateBook(int id, [FromBody] UpdateBookDto updatedBook)
         {
-            UpdateBookCommand command = new UpdateBookCommand(_context);
-            command.BookId = id;
-            command.Model = updatedBook;
+            var command = new UpdateBookCommand(_unitOfWork) { BookId = id, Model = updatedBook };
 
-            UpdateBookCommandValidator validator = new();
+            var validator = new UpdateBookCommandValidator();
             validator.ValidateAndThrow(command);
 
-            command.Handle();
-
-            return Ok($"{updatedBook.Title} updated successfully");
+            await command.Handle();
+            return Ok($"{updatedBook.Title} updated successfully.");
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteBook(int id)
+        public async Task<IActionResult> DeleteBook(int id)
         {
-            DeleteBookCommand command = new DeleteBookCommand(_context);
-            command.BookId = id;
+            var command = new DeleteBookCommand(_unitOfWork) { BookId = id };
 
-            DeleteBookCommandValidator validator = new();
+            var validator = new DeleteBookCommandValidator();
             validator.ValidateAndThrow(command);
 
-            command.Handle();
-
+            await command.Handle();
             return Ok("Book deleted successfully.");
         }
     }

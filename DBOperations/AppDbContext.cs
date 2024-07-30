@@ -10,7 +10,18 @@ public class AppDbContext : DbContext
     {
 
     }
+    
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Book>()
+            .HasOne(b => b.Genre)
+            .WithMany(g => g.Books)
+            .HasForeignKey(b => b.GenreId);
+    }
 
     public DbSet<Book> Books { get; set; }
+    public DbSet<Genre> Genres { get; set; }
 
 }

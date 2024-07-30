@@ -1,7 +1,9 @@
 using BookStoreApp.Common;
 using BookStoreApp.DBOperations;
+using BookStoreApp.GenericRepository;
 using BookStoreApp.Middlewares;
 using BookStoreApp.Services;
+using BookStoreApp.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +15,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresSqlConnection")));
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddSingleton<ILoggerService,ConsoleLogger>();
