@@ -9,5 +9,6 @@ public interface IUnitOfWork
     Task CompleteWithTransaction();
     IGenericRepository<Book> BookRepository { get; }
     IGenericRepository<Genre> GenreRepository { get; }
+    IGenericRepository<Author> AuthorRepository { get; }    
 
 }

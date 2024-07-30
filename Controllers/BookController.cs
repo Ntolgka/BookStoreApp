@@ -49,7 +49,7 @@ namespace BookStoreApp.Controllers
             var validator = new CreateBookCommandValidator();
             validator.ValidateAndThrow(command);
 
-            await command.HandleAsync();
+            await command.Handle();
             return Ok($"{newBook.Title} has saved successfully.");
         }
 

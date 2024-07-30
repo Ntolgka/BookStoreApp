@@ -17,7 +17,7 @@ public class CreateBookCommand
         _mapper = mapper;
     }
 
-    public async Task HandleAsync()
+    public async Task Handle()
     {
         var existingBook = await _unitOfWork.BookRepository.FirstOrDefault(x => x.Title == Model.Title);
 

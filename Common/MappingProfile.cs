@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BookStoreApp.Model;
+using BookStoreApp.Schema.Author;
 using BookStoreApp.Schema.Book;
 using BookStoreApp.Schema.Genre;
 
@@ -22,6 +23,11 @@ namespace BookStoreApp.Common
             CreateMap<Genre, GetGenreDetailDto>();
             CreateMap<Genre, GetGenresDto>();
             CreateMap<UpdateGenreDto, Genre>();
+            
+            CreateMap<CreateAuthorDto, Author>();
+            CreateMap<Author, GetAuthorDetailDto>();
+            CreateMap<Author, GetAuthorsDto>();
+            CreateMap<UpdateAuthorDto, Author>();
         }
     }
 }

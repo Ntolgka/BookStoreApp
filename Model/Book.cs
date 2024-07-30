@@ -12,5 +12,7 @@ public class Book : BaseEntity
     public DateTime PublishDate { get; set; }
     public Genre Genre { get; set; }
     public int GenreId { get; set; }
+    public Author Author { get; set; }
+    public int AuthorId { get; set; }
     
 }

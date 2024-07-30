@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BookStoreApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240730212727_InitialCreate")]
+    [Migration("20240730224152_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -25,6 +25,33 @@ namespace BookStoreApp.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("BookStoreApp.Model.Author", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("InsertDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Authors");
+                });
+
             modelBuilder.Entity("BookStoreApp.Model.Book", b =>
                 {
                     b.Property<int>("Id")
@@ -32,6 +59,9 @@ namespace BookStoreApp.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("GenreId")
                         .HasColumnType("integer");
@@ -50,6 +80,8 @@ namespace BookStoreApp.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
 
                     b.HasIndex("GenreId");
 
@@ -81,13 +113,26 @@ namespace BookStoreApp.Migrations
 
             modelBuilder.Entity("BookStoreApp.Model.Book", b =>
                 {
+                    b.HasOne("BookStoreApp.Model.Author", "Author")
+                        .WithMany("Books")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("BookStoreApp.Model.Genre", "Genre")
                         .WithMany("Books")
                         .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Author");
+
                     b.Navigation("Genre");
+                });
+
+            modelBuilder.Entity("BookStoreApp.Model.Author", b =>
+                {
+                    b.Navigation("Books");
                 });
 
             modelBuilder.Entity("BookStoreApp.Model.Genre", b =>
