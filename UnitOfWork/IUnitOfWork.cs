@@ -1,0 +1,12 @@
+using BookStoreApp.GenericRepository;
+using BookStoreApp.Model;
+
+namespace BookStoreApp.UnitOfWork;
+
+public interface IUnitOfWork
+{
+    Task Complete(); 
+    Task CompleteWithTransaction();
+    IGenericRepository<Book> BookRepository { get; }
+
+}
