@@ -1,4 +1,4 @@
-﻿using BookStoreApp.Application.AuthorOperations;
+﻿using BookStoreApp.Application.AuthorOperations.Queries;
 using FluentValidation;
 
 namespace BookStoreApp.Validation.Author;

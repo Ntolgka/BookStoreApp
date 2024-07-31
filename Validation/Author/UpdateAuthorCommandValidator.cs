@@ -1,4 +1,4 @@
-﻿using BookStoreApp.Application.AuthorOperations;
+﻿using BookStoreApp.Application.AuthorOperations.Commands;
 using FluentValidation;
 
 namespace BookStoreApp.Validation.Author;
@@ -11,6 +11,5 @@ public class UpdateAuthorCommandValidator:AbstractValidator<UpdateAuthorCommand>
         RuleFor(command => command.Model.Name).NotEmpty().MinimumLength(4);
         RuleFor(command => command.Model.LastName).NotEmpty().MinimumLength(4);
         RuleFor(command => command.Model.BirthDate.Date).NotEmpty().LessThan(DateTime.Now.Date);
-        
     }
 }

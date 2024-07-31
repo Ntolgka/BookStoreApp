@@ -1,4 +1,4 @@
-﻿using BookStoreApp.Application.GenreOperations;
+﻿using BookStoreApp.Application.GenreOperations.Queries;
 using FluentValidation;
 
 namespace BookStoreApp.Validation.Genre;

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using BookStoreApp.Application.AuthorOperations;
+using BookStoreApp.Application.AuthorOperations.Commands;
+using BookStoreApp.Application.AuthorOperations.Queries;
 using BookStoreApp.Schema.Author;
 using BookStoreApp.UnitOfWork;
 using BookStoreApp.Validation.Author;

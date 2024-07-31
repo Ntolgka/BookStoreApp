@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using BookStoreApp.Application.GenreOperations;
+using BookStoreApp.Application.GenreOperations.Commands;
+using BookStoreApp.Application.GenreOperations.Queries;
 using BookStoreApp.Schema.Genre;
 using BookStoreApp.UnitOfWork;
 using BookStoreApp.Validation.Genre;

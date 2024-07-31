@@ -1,8 +1,6 @@
-﻿using BookStoreApp.Base;
+﻿namespace BookStoreApp.Schema.Author;
 
-namespace BookStoreApp.Schema.Author;
-
-public class CreateAuthorDto : BaseEntity
+public class CreateAuthorDto
 {
     public string Name { get; set; }
     public string LastName { get; set; }

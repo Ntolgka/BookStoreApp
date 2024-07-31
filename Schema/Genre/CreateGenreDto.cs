@@ -1,8 +1,6 @@
-﻿using BookStoreApp.Base;
+﻿namespace BookStoreApp.Schema.Genre;
 
-namespace BookStoreApp.Schema.Genre;
-
-public class CreateGenreDto : BaseEntity
+public class CreateGenreDto
 {
     public string Name { get; set; }
     public bool IsActive { get; set; } = true;

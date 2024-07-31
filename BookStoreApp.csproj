@@ -2,6 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <InvariantGlobalization>true</InvariantGlobalization>
@@ -10,21 +11,42 @@
 
     <ItemGroup>
         <PackageReference Include="AutoMapper" Version="13.0.1" />
+        <PackageReference Include="FluentAssertions" Version="6.12.0" />
         <PackageReference Include="FluentValidation" Version="11.9.2" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.7">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
         <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.3" />
+        <PackageReference Include="Moq" Version="4.20.70" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
         <PackageReference Include="Npgsql" Version="8.0.3" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+        <PackageReference Include="xunit.assert" Version="2.4.2" />
+        <PackageReference Include="xunit.extensibility.core" Version="2.4.2" />
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Migrations\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Tests\obj\project.assets.json" />
+      <_ContentIncludedByDefault Remove="Tests\obj\project.packagespec.json" />
+      <_ContentIncludedByDefault Remove="Tests\obj\Tests.csproj.nuget.dgspec.json" />
+      <_ContentIncludedByDefault Remove="Tests\obj\Debug\net8.0\Tests.sourcelink.json" />
+      <_ContentIncludedByDefault Remove="Tests\bin\Debug\net8.0\appsettings.Development.json" />
+      <_ContentIncludedByDefault Remove="Tests\bin\Debug\net8.0\appsettings.json" />
+      <_ContentIncludedByDefault Remove="Tests\bin\Debug\net8.0\BookStoreApp.deps.json" />
+      <_ContentIncludedByDefault Remove="Tests\bin\Debug\net8.0\BookStoreApp.runtimeconfig.json" />
+      <_ContentIncludedByDefault Remove="Tests\bin\Debug\net8.0\Tests.deps.json" />
+      <_ContentIncludedByDefault Remove="Tests\bin\Debug\net8.0\Tests.runtimeconfig.json" />
+      <_ContentIncludedByDefault Remove="Tests\bin\Debug\net8.0\Tests\obj\project.assets.json" />
+      <_ContentIncludedByDefault Remove="Tests\bin\Debug\net8.0\Tests\obj\Tests.csproj.nuget.dgspec.json" />
     </ItemGroup>
 
 </Project>

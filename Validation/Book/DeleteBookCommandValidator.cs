@@ -1,4 +1,4 @@
-﻿using BookStoreApp.Application.BooksOperations;
+﻿using BookStoreApp.Application.BooksOperations.Commands;
 using FluentValidation;
 
 namespace BookStoreApp.Validation.Book;
